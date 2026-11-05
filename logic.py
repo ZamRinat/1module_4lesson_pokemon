@@ -1,5 +1,4 @@
 from random import randint
-from selectors import EpollSelector
 import requests
 
 
