@@ -23,7 +23,7 @@ class Pokemon:
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
-            return data["sprites"]["other"]["home"]["front_default"]
+            return data["sprites"]["front_default"]
         else:
             return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLcyG0ovVKlCryBdxLBN4pKDh3PwSpW77Nbo2D64gBwpPlJX2WVkBRzYk&s=10"
 
