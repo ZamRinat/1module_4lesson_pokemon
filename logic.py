@@ -16,6 +16,9 @@ class Pokemon:
 
         self.hunger = 100
 
+        self.power = randint(10, 20)
+        self.hp = randint(100, 200)
+
         Pokemon.pokemons[pokemon_trainer] = self
 
     # Метод для получения картинки покемона через API
@@ -38,6 +41,28 @@ class Pokemon:
         else:
             return "Pikachu"
 
+    # Метод класса для получения картинки покемона
+    def show_img(self):
+        return self.img
+
+    def attack(self, enemy):
+        if self.hunger < 10:
+            return f"{self.name} слишком голоден, чтобы атаковать! Покорми его."
+        self.hunger -= 10
+
+        if isinstance(
+            enemy, Wizard
+        ):  # Проверка на то, что enemy является типом данных Wizard
+            chance = randint(1, 5)
+            if chance == 1:
+                return "Покемон-волшебник применил щит в сражении"
+        if enemy.hp > self.power:
+            enemy.hp -= self.power
+            return f"Сражение @{self.pokemon_trainer} с @{enemy.pokemon_trainer}"
+        else:
+            enemy.hp = 0
+            return f"Победа @{self.pokemon_trainer} над @{enemy.pokemon_trainer}! "
+
     def feed(self):
         if self.hunger >= 100:
             return f"{self.name} уже сыт!"
@@ -46,8 +71,40 @@ class Pokemon:
 
     # Метод класса для получения информации
     def info(self):
-        return f"Имя твоего покемона: {self.name}, сытость: {self.hunger}/100"
+        if isinstance(self, Wizard):
+            return f"""Имя твоего волшебника: {self.name}, 
+            Сытость: {self.hunger}/100,
+            Мощь твоего покемона: {self.power},
+            Здоровье его: {self.hp},"""
+        elif isinstance(self, Fighter):
+            return f"""Имя твоего бойца: {self.name}, 
+            Сытость: {self.hunger}/100,
+            Мощь твоего покемона: {self.power},
+            Здоровье его: {self.hp}."""
+        else:
+            return f"""Имя твоего покемона: {self.name}, 
+                        Сытость: {self.hunger}/100,
+                        Мощь твоего покемона: {self.power},
+                        Здоровье его: {self.hp}."""
 
-    # Метод класса для получения картинки покемона
-    def show_img(self):
-        return self.img
+
+class Wizard(Pokemon):
+    pass
+
+
+class Fighter(Pokemon):
+    def attack(self, enemy):
+        super_power = randint(5, 15)
+        self.power += super_power
+        result = super().attack(enemy)
+        self.power -= super_power
+        return result + f"\nБоец применил супер-атаку силой:{super_power} "
+
+
+if __name__ == "__main__":
+    pokemon = Pokemon("Ash")
+    wizard = Wizard("Gandalf")
+    fighter = Fighter("Conan")
+    print(pokemon.attack(wizard))
+    print(fighter.attack(pokemon))
+    print(wizard.attack(fighter))
