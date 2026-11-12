@@ -14,6 +14,8 @@ class Pokemon:
         self.img = self.get_img()
         self.name = self.get_name()
 
+        self.hunger = 100
+
         Pokemon.pokemons[pokemon_trainer] = self
 
     # Метод для получения картинки покемона через API
@@ -36,9 +38,15 @@ class Pokemon:
         else:
             return "Pikachu"
 
+    def feed(self):
+        if self.hunger >= 100:
+            return f"{self.name} уже сыт!"
+        self.hunger = min(100, self.hunger + 20)
+        return f"Ты покормил {self.name}. Сытость: {self.hunger}/100"
+
     # Метод класса для получения информации
     def info(self):
-        return f"Имя твоего покеомона: {self.name}"
+        return f"Имя твоего покемона: {self.name}, сытость: {self.hunger}/100"
 
     # Метод класса для получения картинки покемона
     def show_img(self):

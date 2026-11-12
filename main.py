@@ -16,4 +16,14 @@ def go(message):
         bot.reply_to(message, "Ты уже создал себе покемона")
 
 
+@bot.message_handler(commands=["feed"])
+def feed(message):
+    username = message.from_user.username
+    if username in Pokemon.pokemons.keys():
+        pokemon = Pokemon.pokemons[username]
+        bot.reply_to(message, pokemon.feed())
+    else:
+        bot.reply_to(message, "Сначала создай покемона командой /go")
+
+
 bot.infinity_polling(none_stop=True)
