@@ -72,20 +72,17 @@ class Pokemon:
     # Метод класса для получения информации
     def info(self):
         if isinstance(self, Wizard):
-            return f"""Имя твоего волшебника: {self.name}, 
-            Сытость: {self.hunger}/100,
-            Мощь твоего покемона: {self.power},
-            Здоровье его: {self.hp},"""
+            kind = "волшебника"
         elif isinstance(self, Fighter):
-            return f"""Имя твоего бойца: {self.name}, 
-            Сытость: {self.hunger}/100,
-            Мощь твоего покемона: {self.power},
-            Здоровье его: {self.hp}."""
+            kind = "бойца"
         else:
-            return f"""Имя твоего покемона: {self.name}, 
-                        Сытость: {self.hunger}/100,
-                        Мощь твоего покемона: {self.power},
-                        Здоровье его: {self.hp}."""
+            kind = "покемона"
+        return (
+            f"Имя твоего {kind}: {self.name}\n"
+            f"Сытость: {self.hunger}/100\n"
+            f"Мощь твоего покемона: {self.power}\n"
+            f"Здоровье его: {self.hp}"
+        )
 
 
 class Wizard(Pokemon):
