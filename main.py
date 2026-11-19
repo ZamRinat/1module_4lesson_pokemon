@@ -42,6 +42,16 @@ def attack_pok(message):
         )
 
 
+@bot.message_handler(commands=["feed_food"])
+def feed_food(message):
+    username = message.from_user.username
+    if username in Pokemon.pokemons.keys():
+        pokemon = Pokemon.pokemons[username]
+        bot.reply_to(message, pokemon.feed_food())
+    else:
+        bot.reply_to(message, "Сначала создай покемона командой /go")
+
+
 @bot.message_handler(commands=["feed"])
 def feed(message):
     username = message.from_user.username
